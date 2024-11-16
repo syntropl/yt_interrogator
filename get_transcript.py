@@ -4,7 +4,7 @@ from youtube_transcript_api import YouTubeTranscriptApi
 from youtube_transcript_api._errors import TranscriptsDisabled, NoTranscriptFound
 
 
-from parsing_utilities import format_duration, parse_transcript
+# from parsing_utilities import format_duration, parse_transcript
 import re
 
 from datetime import datetime
@@ -13,6 +13,25 @@ from collections import namedtuple
 
 
 import yt_dlp
+
+
+
+""""usage
+(url string) -> fetch_metadata_by_url -> (metadata dict) can include transcript
+(metadata dict) -> parse_video_metadata -> (printable string with metadata, transcript is optional)
+
+(url string) -> fetch_subtitles_by_url -> (tanscript entries list)
+
+transctipt_entries is a  list of dicts (metadata[transcript_entries])
+
+each entry contains three default fields:
+metadata['transcript_entries'][index][text] = line of subtitles
+metadata['transcript_entries'][index][start] = time in video of subtitle
+metadata['transcript_entries'][index][duration] = duration of subtitle on screen
+
+"""
+
+
 
 def fetch_subtitles_by_url(video_url):
     """
@@ -61,7 +80,6 @@ def fetch_subtitles_by_url(video_url):
     
 
 
-
 def fetch_metadata_by_url(video_url, get_transcript=True):
 
     transcript_entries = []
@@ -86,77 +104,77 @@ def fetch_metadata_by_url(video_url, get_transcript=True):
         return metadata
 
 
+## THIS SHOULD BE IN parsing_utilities.py
+# def parse_video_metadata(metadata, include_transcript=True):
+#     # Set line length based on the longest string in 'title' or 'url'
+#     line_length = max(len(metadata['title']), len(metadata['url']))
+#     line_string = "_" * line_length
 
-def parse_video_metadata(metadata, include_transcript=True):
-    # Set line length based on the longest string in 'title' or 'url'
-    line_length = max(len(metadata['title']), len(metadata['url']))
-    line_string = "_" * line_length
+#     # Format date (assuming it's a string in YYYYMMDD format)
+#     upload_date = datetime.strptime(metadata['upload_date'], "%Y%m%d").strftime("%Y-%m-%d")
 
-    # Format date (assuming it's a string in YYYYMMDD format)
-    upload_date = datetime.strptime(metadata['upload_date'], "%Y%m%d").strftime("%Y-%m-%d")
+#     duration = format_duration(metadata['video_duration_in_seconds'])
+#     transcript_entries = metadata['transcript_entries']
 
-    duration = format_duration(metadata['video_duration_in_seconds'])
-    transcript_entries = metadata['transcript_entries']
+#     metadata_printable_string = f'''
 
-    metadata_printable_string = f'''
+# {line_string}
+# {metadata['url']}
+# {line_string}
+# {metadata['title']}
+# {metadata['uploader']}
+# \n
+# {upload_date}
+# {duration}
+# {line_string}
 
-{line_string}
-{metadata['url']}
-{line_string}
-{metadata['title']}
-{metadata['uploader']}
-\n
-{upload_date}
-{duration}
-{line_string}
-
-'''
-    if include_transcript:
-        metadata_printable_string+=parse_transcript(transcript_entries,include_times=True)
-    return metadata_printable_string
+# '''
+#     if include_transcript:
+#         metadata_printable_string+=parse_transcript(transcript_entries,include_times=True)
+#     return metadata_printable_string
 
 
-def print_youtube_metadata(metadata, include_transcript=True):
+# def print_youtube_metadata(metadata, include_transcript=True):
 
-    # Set line length based on the longest string in 'title' or 'url'
-    line_length = max(len(metadata['title']), len(metadata['url']))
-    line_string = "_" * line_length
+#     # Set line length based on the longest string in 'title' or 'url'
+#     line_length = max(len(metadata['title']), len(metadata['url']))
+#     line_string = "_" * line_length
 
-    # Format date (assuming it's a string in YYYYMMDD format)
-    upload_date = datetime.strptime(metadata['upload_date'], "%Y%m%d").strftime("%Y-%m-%d")
+#     # Format date (assuming it's a string in YYYYMMDD format)
+#     upload_date = datetime.strptime(metadata['upload_date'], "%Y%m%d").strftime("%Y-%m-%d")
 
-    # Format duration (convert seconds to HH:MM:SS)
-    total_seconds = metadata['video_duration_in_seconds']
-    hours, remainder = divmod(total_seconds, 3600)
-    minutes, seconds = divmod(remainder, 60)
-    duration = f"{hours:02}h:{minutes:02}m:{seconds:02}s"
+#     # Format duration (convert seconds to HH:MM:SS)
+#     total_seconds = metadata['video_duration_in_seconds']
+#     hours, remainder = divmod(total_seconds, 3600)
+#     minutes, seconds = divmod(remainder, 60)
+#     duration = f"{hours:02}h:{minutes:02}m:{seconds:02}s"
 
-    transcript_entries = metadata['transcript_entries']
+#     transcript_entries = metadata['transcript_entries']
 
-    print(f'''
+#     print(f'''
 
-{line_string}
-{metadata['url']}
-{line_string}
-{metadata['title']}
-{metadata['uploader']}
-\n
-{upload_date}
-{duration}
-{line_string}
+# {line_string}
+# {metadata['url']}
+# {line_string}
+# {metadata['title']}
+# {metadata['uploader']}
+# \n
+# {upload_date}
+# {duration}
+# {line_string}
 
-''')
-    if(transcript_entries):
-        print(parse_transcript(transcript_entries, include_times=False))
-    else:
-        print("Transcript not found")
+# ''')
+#     if(transcript_entries):
+#         print(parse_transcript(transcript_entries, include_times=False))
+#     else:
+#         print("Transcript not found")
     
 
 
 
 def test_print_all_metadata():
     url = "https://www.youtube.com/watch?v=fdiTaI4gdmA&t=291s" # supersalience
-    print_youtube_metadata(fetch_metadata_by_url(url),include_transcript=True)
+    print(parse_video_metadata(fetch_metadata_by_url(url),include_transcript=True))
     print("\n\n")
 
 
@@ -167,9 +185,3 @@ if __name__ == "__main__":
 
 
 
-
-    # transcript = fetch_subtitles_by_url(url)
-    # if transcript:
-    #     for entry in transcript:
-    #         print(entry['text'])
-    

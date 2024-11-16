@@ -15,5 +15,35 @@ def parse_transcript(transcript_entries, include_times=False):
             formatted_start = format_duration(entry['start'])
             transcript_string += f"\n[{formatted_start}]  "
         transcript_string += entry['text']
+    transcript_string+="\n\n______________________________________________________________________________\n\n\n"
+    
     
     return transcript_string
+
+def parse_video_metadata(metadata, include_transcript=True):
+    # Set line length based on the longest string in 'title' or 'url'
+    line_length = max(len(metadata['title']), len(metadata['url']))
+    line_string = "_" * line_length
+
+    # Format date (assuming it's a string in YYYYMMDD format)
+    upload_date = datetime.strptime(metadata['upload_date'], "%Y%m%d").strftime("%Y-%m-%d")
+
+    duration = format_duration(metadata['video_duration_in_seconds'])
+    transcript_entries = metadata['transcript_entries']
+
+    metadata_printable_string = f'''
+
+{line_string}
+{metadata['url']}
+{line_string}
+{metadata['title']}
+{metadata['uploader']}
+\n
+{upload_date}
+{duration}
+{line_string}
+
+'''
+    if include_transcript:
+        metadata_printable_string+=parse_transcript(transcript_entries,include_times=True)
+    return metadata_printable_string

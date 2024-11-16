@@ -1,6 +1,8 @@
-from settings import initiate_set_api_key, iniate_set_output_lanugage, initiate_set_output_folder_path
 from pip_setup import pip_update_missing_dependencies
+from settings import initiate_set_api_key, iniate_set_output_lanugage, initiate_set_output_folder_path
 from api_key_manager import print_api_key
+from interrogate_transcript import interrogate_transcript
+
 should_close_program = False
 
 settings_commands = "SETTINGS \n\nset_api_key, language"
@@ -70,6 +72,12 @@ def main_sequence():
                 initiate_set_output_folder_path()
             case "quit":
                 break
+            case _:
+                try:
+                    interrogate_transcript(user_input)
+                except Exception as e:
+                    pass
+
 
         
 
@@ -83,5 +91,4 @@ if __name__ == "__main__":
     print("\n\n\n END OF PROGRAM\n\n\n")
     
 # INTERPRET_COMMAND
-# PRINT_MENU
-# PRINT_LONG_HELP
+# PRINT_MENU# PRINT_LONG_HELPok
