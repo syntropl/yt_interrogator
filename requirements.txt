@@ -1,5 +1,6 @@
 importlib_metadata==8.5.0
 langchain_community==0.3.7
 python-dotenv==1.0.1
+setuptools==58.1.0
 youtube_transcript_api==0.6.2
 yt_dlp==2024.11.4
