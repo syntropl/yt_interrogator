@@ -6,51 +6,53 @@
 - access to the internet from your device
 
 ## android
-### 1 download and install terminal app to your phone 
+### 1 DOWNLOAD AND INSTALL TERMINAL APP TO YOUR ANDROID DEVICE
+
 use google play or direct download:
 direct download: https://f-droid.org/en/packages/com.termux/
 google play: https://play.google.com/store/apps/details?id=com.termux
 
-### 2 run terminal app on your phone and update it 
+### 2 RUN TERMINAL APP ON ANDROID DEVICE AND UPDATE IT
 input this command in the terminal:
-`code`pkg update && pkg upgrade
+```pkg update && pkg upgrade```
 
-### 3 install git and python
+### 3 INSTALL GIT AND PYTHON
 in the terminal app input and run the following sequence of commands
-#### 
+
 Install git
-`code`pkg install git
+```pkg install git```
 
 Check if git is installed
-`code`git --version
+```git --version```
 
 Install Python
-`code`pkg install python
+```pkg install python```
 
 Check if Python is installed
-`code`python --version
+```python --version```
 
 
-### 3 run git and clone this repo 
+### 3 CLONE THIS REPO 
 clone repo to your device
-`code` git clone https://github.com/syntropl/yt_interrogator
+```git clone https://github.com/syntropl/yt_interrogator```
 
 enter repo folder
-`code` cd yt_interrogator
+```cd yt_interrogator```
 
 if you have an old version of the repo you can update it by navigating to repo the folder yt_interrogator and running
-`code` git pull
+````git pull```
 
-# 4 install dependencies and run
+# 4 INSTALL DEPENDENCIES
 
 install required python libraries listed in the text file
-`code`  pip install -r requirements.txt
+```pip install -r requirements.txt```
 
 (optionally, if there are problems with dependencies, make sure the txt is up to date)
-`code` update_requirements.py
+```update_requirements.py```
 
-run yt_interrogator
-`code` main.py
+# 5 RUN THE APP
+run app from terminal while at yt_interrogator
+```main.py```
 
 
 

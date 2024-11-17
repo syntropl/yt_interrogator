@@ -56,6 +56,8 @@ def extract_imports_from_file(filepath):
                     imports.add(module_name)
     return imports
 
+import importlib.util
+import sys
 
 def is_standard_library(module_name):
     """Check if a module is part of the standard library."""
