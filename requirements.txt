@@ -1,0 +1,13 @@
+ast
+collections
+datetime
+dotenv
+importlib
+langchain_community==0.3.5
+os
+pathlib
+re==2.2.1
+subprocess
+sysconfig
+youtube_transcript_api==0.6.2
+yt_dlp==2024.11.4
