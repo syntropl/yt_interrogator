@@ -1,7 +1,9 @@
 # dependency_manager.py
 import subprocess
 import sys
-import pkg_resources
+
+
+from importlib.metadata import distributions, PackageNotFoundError
 
 def is_installed(package):
     """
@@ -14,9 +16,14 @@ def is_installed(package):
         bool: True if installed, False otherwise.
     """
     try:
-        pkg_resources.get_distribution(package)
-        return True
-    except pkg_resources.DistributionNotFound:
+        # Normalize package name to lowercase as per PEP 503
+        package_normalized = package.lower()
+        for dist in distributions():
+            if dist.metadata["Name"].lower() == package_normalized:
+                return True
+        return False
+    except Exception as e:
+        print(f"Error checking if package '{package}' is installed: {e}")
         return False
 
 def download_dependencies(requirements_file='requirements.txt'):
@@ -44,7 +51,12 @@ def ensure_dependencies():
         print("requirements.txt not found. Please run update_requirements.py first.")
         sys.exit(1)
     
-    missing = [pkg.split('==')[0] for pkg in dependencies if not is_installed(pkg.split('==')[0])]
+    missing = []
+    for pkg in dependencies:
+        # Handle version specifiers, e.g., 'requests==2.25.1'
+        pkg_name = pkg.split('==')[0].split('>=')[0].split('<=')[0].strip()
+        if not is_installed(pkg_name):
+            missing.append(pkg)
     
     if missing:
         print("Installing missing dependencies...")

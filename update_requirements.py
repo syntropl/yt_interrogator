@@ -73,8 +73,8 @@ def main():
     # Step 1: Generate requirements.txt
     generate_requirements(output_file=requirements_file, ignore_dirs=ignore_dirs)
     
-    # Step 2: Install missing packages
-    install_missing_packages(requirements_file)
+    # # Step 2: Install missing packages
+    # install_missing_packages(requirements_file)
 
 if __name__ == "__main__":
     main()
