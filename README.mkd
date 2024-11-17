@@ -30,37 +30,40 @@ I suggest using termux. You can use one of two ways to install it use google pla
 ### 3 INSTALL GIT AND PYTHON (unless you already have them)
 in the terminal app input and run the following sequence of commands
 
-Install git
-```pkg install git```
 
-Check if git is installed
-```git --version```
+```pkg install git``` will nstall git
 
-Install Python
-```pkg install python3```
+```git --version``` will check if git is installed
 
-Check if Python is installed
-```python --version```
+
+```pkg install python3``` will install python
+
+```python --version``` will check if Python is installed
 
 
 ### 3 CLONE THIS REPO 
-clone repo to your device
 
-```git clone https://github.com/syntropl/yt_interrogator```
 
-enter repo folder
+```git clone https://github.com/syntropl/yt_interrogator``` will clone repo to your device
 
-```cd yt_interrogator```
 
-if you have an old version of the repo you can update it by navigating to repo the folder yt_interrogator and running
 
-```git pull``
+```cd yt_interrogator``` will enter repo folder
+
+if you have an old version of the repo input ```git pull`` to update your repo
+
 
 # 4 INSTALL DEPENDENCIES
 
-install required python libraries listed in the text file
+```pip install pipreqs``` will 
+install required python libraries listed in requirements.txt
 
-```pip install -r requirements.txt```
+
+```pipreqs . --force --savepath update_requirements.txt```
+
+```python update_requirements.py```will download missing libraries
+
+
 
 (optionally, if there are problems with dependencies, make sure the txt is up to date)
 
