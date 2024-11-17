@@ -49,6 +49,7 @@ quit: to exit program
 
 
 def start_sequence():
+    
     from api_key_manager import ensure_api_key_is_verified
     ensure_api_key_is_verified()
     print(ascii_intro)
@@ -81,13 +82,17 @@ def main_sequence():
                 except Exception as e:
                     pass
 
+def run():
+    start_sequence()
+    main_sequence()
+    print("\n\n\n END OF PROGRAM\n\n\n")
+
 
     
 
 if __name__ == "__main__":
-    start_sequence()
-    main_sequence()
-    print("\n\n\n END OF PROGRAM\n\n\n")
+    run()
+
     
 # INTERPRET_COMMAND
 # PRINT_MENU# PRINT_LONG_HELPok
