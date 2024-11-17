@@ -1,4 +1,3 @@
-from pip_setup import pip_update_missing_dependencies
 from settings import initiate_set_api_key, iniate_set_output_lanugage, initiate_set_output_folder_path
 from api_key_manager import ensure_api_key_is_verified, print_api_key
 from interrogate_transcript import interrogate_transcript
