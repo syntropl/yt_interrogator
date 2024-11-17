@@ -35,9 +35,24 @@ Check if Python is installed
 clone repo to your device
 `code` git clone https://github.com/syntropl/yt_interrogator
 
-if you have an old version of the repo you can update it by navigating to repo the folder yt_interrogator and running
-`code` git update
-
-
 enter repo folder
-`code` cd syntropl/yt_interrogator
+`code` cd yt_interrogator
+
+if you have an old version of the repo you can update it by navigating to repo the folder yt_interrogator and running
+`code` git pull
+
+# 4 install dependencies and run
+
+install required python libraries listed in the text file
+`code`  pip install -r requirements.txt
+
+(optionally, if there are problems with dependencies, make sure the txt is up to date)
+`code` update_requirements.py
+
+run yt_interrogator
+`code` main.py
+
+
+
+
+
