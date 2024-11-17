@@ -1,12 +1,13 @@
 ast
 collections
 datetime
-dotenv
+python-dotenv==1.0.1
 importlib
+importlib_metadata
 langchain_community==0.3.5
 os
 pathlib
 re==2.2.1
 sysconfig
-youtube_transcript_api==0.6.2
-yt_dlp==2024.11.4
+youtube-transcript-api==0.6.2
+yt_dlp

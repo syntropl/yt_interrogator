@@ -1,22 +1,33 @@
 # INSTALLATION INSTRUCTIONS
 
-## requirements
-- OPENAI api key
-- terminal app
+## prerequisites for app to work
+- OPENAI api key (it's available to logged in users at the api key page https://platform.openai.com/api-keys ) 
 - access to the internet from your device
 
-## android
-### 1 DOWNLOAD AND INSTALL TERMINAL APP TO YOUR ANDROID DEVICE
+# 1. OPEN TERMINAL
+This is a Comamand Line Interface application and has no GUI. IT requires a terminal app both to install, and to run it. For android you may need to perform additional steps
 
-use google play or direct download:
-direct download: https://f-droid.org/en/packages/com.termux/
-google play: https://play.google.com/store/apps/details?id=com.termux
+# TERMINAL IN OSX / LINUX / WINDOWS
 
-### 2 RUN TERMINAL APP ON ANDROID DEVICE AND UPDATE IT
-input this command in the terminal:
+For desktop systems you can use your system's native terminal.
+
+- mac OSX and Linux: run "Terminal" app
+- windows: run "Windows Terminal" app
+
+## TERMINAL ON ANDROID
+
+1.  Download and install a terminal app on your android device
+
+I suggest using termux. You can use one of two ways to install it use google play or direct download:
+- google play: https://play.google.com/store/apps/details?id=com.termux
+- direct download + run the downloaded apk file: https://f-droid.org/en/packages/com.termux/
+
+2. input this command in the terminal:
+
 ```pkg update && pkg upgrade```
 
-### 3 INSTALL GIT AND PYTHON
+
+### 3 INSTALL GIT AND PYTHON (unless you already have them)
 in the terminal app input and run the following sequence of commands
 
 Install git
@@ -26,7 +37,7 @@ Check if git is installed
 ```git --version```
 
 Install Python
-```pkg install python```
+```pkg install python3```
 
 Check if Python is installed
 ```python --version```
@@ -34,24 +45,30 @@ Check if Python is installed
 
 ### 3 CLONE THIS REPO 
 clone repo to your device
+
 ```git clone https://github.com/syntropl/yt_interrogator```
 
 enter repo folder
+
 ```cd yt_interrogator```
 
 if you have an old version of the repo you can update it by navigating to repo the folder yt_interrogator and running
-````git pull```
+
+```git pull``
 
 # 4 INSTALL DEPENDENCIES
 
 install required python libraries listed in the text file
+
 ```pip install -r requirements.txt```
 
 (optionally, if there are problems with dependencies, make sure the txt is up to date)
+
 ```update_requirements.py```
 
 # 5 RUN THE APP
 run app from terminal while at yt_interrogator
+
 ```main.py```
 
 

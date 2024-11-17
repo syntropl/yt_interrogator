@@ -18,9 +18,13 @@ import importlib.util
 
 # Try to import importlib.metadata for Python 3.8+, else set to None
 try:
-    from importlib import metadata
+    import importlib.metadata as metadata
 except ImportError:
-    metadata = None
+    try:
+        # For Python <3.8, use the backported importlib_metadata package
+        import importlib_metadata as metadata
+    except ImportError:
+        metadata = None
 
 def find_python_files(root_dir):
     """Recursively find all .py files starting from root_dir."""
@@ -76,7 +80,6 @@ def is_standard_library(module_name):
     except Exception:
         return False
 
-
 def is_local_module(module_name, project_root):
     """Check if a module is a local module within the project."""
     for root, dirs, files in os.walk(project_root):
@@ -90,12 +93,6 @@ def is_local_module(module_name, project_root):
 
 def get_module_version(module_name):
     """Get the version of a module, if possible."""
-    if metadata:
-        try:
-            return metadata.version(module_name)
-        except metadata.PackageNotFoundError:
-            pass
-    # Try to import the module and get __version__
     try:
         module = __import__(module_name)
         version = getattr(module, '__version__', None)
@@ -105,6 +102,24 @@ def get_module_version(module_name):
             return str(version)
     except ImportError:
         return None
+
+def get_distribution_name_and_version(module_name):
+    """Get the distribution name and version for a module."""
+    if metadata:
+        try:
+            # Map top-level packages to their distributions
+            packages_distributions = metadata.packages_distributions()
+            distributions = packages_distributions.get(module_name)
+            if distributions:
+                # If multiple distributions provide the package, pick the first one
+                dist_name = distributions[0]
+                dist = metadata.distribution(dist_name)
+                dist_version = dist.version
+                return dist.metadata['Name'], dist_version
+        except Exception as e:
+            pass
+    # Fallback: Use the module name as the distribution name
+    return module_name, get_module_version(module_name)
 
 def update_requirements():
     """Function to update requirements.txt."""
@@ -141,26 +156,26 @@ def update_requirements():
             third_party_modules.add(module_name)
     print(f"Third-party modules: {third_party_modules}")
 
-    # Step 4: Get versions and update requirements.txt
-    print("Resolving module versions...")
+    # Step 4: Get distribution names and versions, and update requirements.txt
+    print("Resolving module versions and distribution names...")
     requirements = {}
     for module_name in sorted(third_party_modules):
-        version = get_module_version(module_name)
+        dist_name, version = get_distribution_name_and_version(module_name)
         if version:
-            requirements[module_name] = version
-            print(f"Module '{module_name}' version '{version}'")
+            requirements[dist_name] = version
+            print(f"Module '{module_name}' is provided by '{dist_name}' version '{version}'")
         else:
-            requirements[module_name] = None
-            print(f"Could not determine version for {module_name}", file=sys.stderr)
+            requirements[dist_name] = None
+            print(f"Could not determine version for module '{module_name}' (distribution '{dist_name}')", file=sys.stderr)
 
     # Write to requirements.txt
     print("Updating requirements.txt...")
     with open('requirements.txt', 'w') as req_file:
-        for module_name, version in requirements.items():
+        for dist_name, version in requirements.items():
             if version:
-                req_file.write(f"{module_name}=={version}\n")
+                req_file.write(f"{dist_name}=={version}\n")
             else:
-                req_file.write(f"{module_name}\n")
+                req_file.write(f"{dist_name}\n")
 
     print("requirements.txt has been updated.")
 
