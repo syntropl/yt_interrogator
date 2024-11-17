@@ -102,9 +102,17 @@ def get_module_version(module_name):
             return str(version)
     except ImportError:
         return None
+MODULE_TO_PACKAGE_MAP = {
+    'dotenv': 'python-dotenv',
+    # Add other mappings as needed
+}
 
 def get_distribution_name_and_version(module_name):
     """Get the distribution name and version for a module."""
+    if module_name in MODULE_TO_PACKAGE_MAP:
+        dist_name = MODULE_TO_PACKAGE_MAP[module_name]
+        version = get_module_version(module_name)
+        return dist_name, version
     if metadata:
         try:
             # Map top-level packages to their distributions
