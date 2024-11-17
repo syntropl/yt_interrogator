@@ -2,6 +2,12 @@
     # before calling this with optional arg list_of_indexes, 
     # somehow analyze the iterable to provide list_of_indexes
 
+def hard_chunk_to_strings(serializable, chunk_size, list_of_indexes=None, separator=""):
+    chunks = hard_chunk_serializable(serializable, chunk_size, list_of_indexes)
+    return list(chunks)  # Return a list of chunks instead of a single string
+
+
+
 def hard_chunk_serializable(serializable, chunk_size, list_of_indexes=None):
     """
     Breaks a serializable object into smaller chunks of a given size,

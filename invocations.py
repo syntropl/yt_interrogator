@@ -105,21 +105,8 @@ def invoke_summarize_chunk(source_chunk):
 
 
 
-
-
-def one_shot_interrogate(request, source_text): # GDZIE TRANSCRIPT?
-    print("TODO invoke_llm(request)")
-    response = new_gpt().invoke(request).content+"\n\n"
-    return response
-
-
-
-
 def summarize_transcript(metadata):
     
-
-
-
     transcirpt_text = parse_transcript(metadata['transcript_entries'])
     chunk_summaries = []
     final_summary = ""
@@ -164,9 +151,81 @@ def invoke_merge_chunk_summaries(list_of_summaries):
     )
     return new_gpt().invoke(full_prompt).content
 
+one_shot_chunked_PROMPT = ''''
+#SITUATION
+You are Transcript Interrogator
+you process provided transcripts or transcript chunks to best answer user's request.
+user wants to know things about the transcript and you find out the answers.
+
+Do not answer questions not asked by user
+Answer to user's request precisely, to the point, and include specific information from the transcript if relevant.
+Do not add comments beyond answering the request directly.
+#REQUEST
+{request}
+
+#TEXT CHUNK
+{transcript_chunk}
+
+'''
+
+merge_chunk_responses_PROMPT = '''
+#SITUATION
+source text has been chunked and interrogated using following request for each chunk:
+{request}
+
+#YOUR TASK
+merge provided responses into one coherent answer, include all raised points on topic, skip reports of chunks being irrelevant
+
+#CHUNK RESPONSES
+{chunk_responses}
+'''
+
+
+
+
+def one_shot_interrogate(video_metadata, request):
+    print("initiating one shot interrogation with chunking capability")
+    max_chunk_size = 28000
+    try:
+        transcript_text = parse_transcript(video_metadata['transcript_entries'])
+        from hard_chunker import hard_chunk_to_strings
+        chunks = hard_chunk_to_strings(transcript_text,max_chunk_size)
+        chunk_responses = []
+        for chunk in chunks:
+            print(f"\n\nprocessing chunk {len(chunk_responses)+1} of {len(chunks)}:")
+            full_prompt = one_shot_chunked_PROMPT.format(
+            request=request,
+            transcript_chunk = chunk)
+            response = new_gpt().invoke(full_prompt).content
+            chunk_responses.append(response)
+
+
+
+        merge_full_prompt = merge_chunk_responses_PROMPT.format(
+            request = request,
+            chunk_responses = chunk_responses
+
+        )
+        final_response = new_gpt().invoke(merge_full_prompt).content
+        return final_response
+    except Exception as message:
+        print(f"ERROR: one shot interrogation with chunking failed \nMESSAGE: {message} ")
+
 if __name__ == "__main__":
     
+    print("TESTING ONE SHOT INTERROGATE")
 
-    pass
+    url = "https://www.youtube.com/watch?v=fdiTaI4gdmA&t=291s" # supersalience
+    request = "quote kang"
+
+    url = "https://www.youtube.com/watch?v=td6fozpEb1U" # citizen s2
+    request = "what does future operations person do"
+    from get_transcript import fetch_metadata_by_url 
+    metadata = fetch_metadata_by_url(url)
+    print(parse_video_metadata(metadata))
+    response = one_shot_interrogate(metadata,request)
+    print(f"\n\n{request}\n\n{response}")
+    print("\n\n")
+
 
 

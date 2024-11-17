@@ -4,6 +4,9 @@ from pathlib import Path
 from dotenv import load_dotenv, set_key
 from langchain_community.llms import OpenAI 
 
+
+from parsing_utilities import section_print
+
 # Define the path to the .env file
 ENV_FILE = Path('.') / '.env'
 
@@ -11,6 +14,9 @@ ENV_FILE = Path('.') / '.env'
 load_dotenv(dotenv_path=ENV_FILE)
 
 
+        
+
+    
 def verify_openai_api_key(key: str) -> bool:
     """
     Verifies the provided OpenAI API key by making a test API call.
@@ -24,14 +30,13 @@ def verify_openai_api_key(key: str) -> bool:
     """
 
     try:
-        print("Verifying the API key...\n")
+        
         llm = OpenAI(openai_api_key=key)
-
         test_prompt = '''"Respond only with a word exactly 11 characters long. interlinked."'''
-        print(f"\n\nTEST PROMPT:\n{test_prompt}")
-
         response_text = llm.invoke(test_prompt).strip().strip('.')
-        print(f'''\nRESPONSE: \n"{response_text}"''')
+
+        section_print(f"\n\nTEST PROMPT:\n{test_prompt}\n"+f'''\nRESPONSE: \n"{response_text}"''' ,"Verifying the API key...\n")
+     
 
         if len(response_text) == 11:
             print("\n\nopenai api connection verified")
@@ -76,7 +81,7 @@ def print_api_key(masked=False):
     return key
 
 
-def test_api_key_from_env() -> bool:
+def ensure_api_key_is_verified() -> bool:
     """
     Retrieves the API key from the .env file and verifies its validity.
     Returns True if valid, False otherwise.
@@ -87,7 +92,7 @@ def test_api_key_from_env() -> bool:
     try:
         api_key = os.getenv("OPENAI_API_KEY_for_yt_interrogator")
         if not api_key:
-            print("ERROR: No API key found in .env file.")
+            print("API key is not set in .env file.")
             return False
         if verify_openai_api_key(api_key):
             return True

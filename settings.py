@@ -1,4 +1,12 @@
-from api_key_manager import set_api_key
+from api_key_manager import set_api_key, verify_openai_api_key
+import os
+from dotenv import load_dotenv
+from pathlib import Path
+
+
+
+
+
 
 def initiate_set_api_key():
     info = '''
@@ -8,6 +16,8 @@ this program uses api key stored in system env to avoid accidental sharing of th
 get your key on openai api key page: https://platform.openai.com/api-keys
 
 '''
+    ENV_FILE = Path('.') / '.env'
+    load_dotenv(dotenv_path=ENV_FILE)
     print(info)
     should_continue = True
     while(should_continue):

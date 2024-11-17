@@ -1,5 +1,15 @@
 from datetime import datetime, timedelta
 
+def section_print(text, title=None):
+    print("\n\n")
+    if title:
+        print("______________________________________________________________________________")
+        print(f"\n{title}")
+    print("______________________________________________________________________________")
+    print(text)
+    print("\n\n______________________________________________________________________________\n")
+    
+
 def format_duration(seconds):
     hours, remainder = divmod(seconds, 3600)
     minutes, seconds = divmod(remainder, 60)

@@ -1,6 +1,6 @@
 from pip_setup import pip_update_missing_dependencies
 from settings import initiate_set_api_key, iniate_set_output_lanugage, initiate_set_output_folder_path
-from api_key_manager import print_api_key
+from api_key_manager import ensure_api_key_is_verified, print_api_key
 from interrogate_transcript import interrogate_transcript
 
 should_close_program = False
@@ -50,14 +50,18 @@ quit: to exit program
 
 
 def start_sequence():
+    from api_key_manager import ensure_api_key_is_verified
+    ensure_api_key_is_verified()
     print(ascii_intro)
-    print("for commands type 'help'\n\n")
     
 def main_sequence():
     #if api key not set (or wrong)
     # make user update it
 
+    
+
     while(should_close_program==False):
+        print("for commands type 'help'\n\n")
         user_input = input("\n\ninput command or youtube video url:\n>")
         match user_input:
             case "help":
@@ -79,10 +83,6 @@ def main_sequence():
                     pass
 
 
-        
-
-
-    
     
 
 if __name__ == "__main__":

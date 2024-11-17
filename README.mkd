@@ -1,0 +1,43 @@
+# INSTALLATION INSTRUCTIONS
+
+## requirements
+- OPENAI api key
+- terminal app
+- access to the internet from your device
+
+## android
+### 1 download and install terminal app to your phone 
+use google play or direct download:
+direct download: https://f-droid.org/en/packages/com.termux/
+google play: https://play.google.com/store/apps/details?id=com.termux
+
+### 2 run terminal app on your phone and update it 
+input this command in the terminal:
+`code`pkg update && pkg upgrade
+
+### 3 install git and python
+in the terminal app input and run the following sequence of commands
+#### 
+Install git
+`code`pkg install git
+
+Check if git is installed
+`code`git --version
+
+Install Python
+`code`pkg install python
+
+Check if Python is installed
+`code`python --version
+
+
+### 3 run git and clone this repo 
+clone repo to your device
+`code` git clone https://github.com/syntropl/yt_interrogator
+
+if you have an old version of the repo you can update it by navigating to repo the folder yt_interrogator and running
+`code` git update
+
+
+enter repo folder
+`code` cd syntropl/yt_interrogator

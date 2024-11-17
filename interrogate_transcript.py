@@ -1,5 +1,5 @@
 from get_transcript import fetch_subtitles_by_url, fetch_metadata_by_url
-from invocations import summarize_transcript
+from invocations import summarize_transcript, one_shot_interrogate
 
 from parsing_utilities import parse_video_metadata
 
@@ -41,6 +41,7 @@ def interrogate_transcript(yt_url):
         should_keep_interrogating = True
 
         while should_keep_interrogating:
+            print("\nfor commands type 'help'\n\n")
             request = input('ask me something about the transcript: \n>')
             match request:
                 case "help":
@@ -48,9 +49,13 @@ def interrogate_transcript(yt_url):
                 case "end":
                     should_keep_interrogating = False
                 case _:
-                    response = one_shot_interrogate(request)
+                    response = one_shot_interrogate(metadata,request)
+                    print(f"\n\n{request}\n\n{response}")
+                    print("\n\n")
+                    from parsing_utilities import section_print
+                    section_print(response, request)
                     ## LEARN TO USE CHAT MODEL INSTEAD?
-                    interrogation_memory.extend([request, response])
+                    #interrogation_memory.extend([request, response])
 
     
 
@@ -61,7 +66,7 @@ def interrogate_transcript(yt_url):
 
 if __name__ == "__main__":
     url = "https://www.youtube.com/watch?v=fdiTaI4gdmA&t=291s" # supersalience
-    url = "https://www.youtube.com/watch?v=5sDzvJn04Dc&list=PLnNSjVGWqTO6WqTCsGBqZDwvL1Beo7VHN" # jim rutt + ryan patrick
-    url = "https://www.youtube.com/watch?v=td6fozpEb1U" # citizen s2
-    
+    # url = "https://www.youtube.com/watch?v=5sDzvJn04Dc&list=PLnNSjVGWqTO6WqTCsGBqZDwvL1Beo7VHN" # jim rutt + ryan patrick
+    # url = "https://www.youtube.com/watch?v=td6fozpEb1U" # citizen s2
+
     interrogate_transcript(url)
