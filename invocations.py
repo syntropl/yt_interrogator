@@ -113,22 +113,37 @@ def one_shot_interrogate(request, source_text): # GDZIE TRANSCRIPT?
     return response
 
 
+
+
 def summarize_transcript(metadata):
+    
+
+
+
     transcirpt_text = parse_transcript(metadata['transcript_entries'])
     chunk_summaries = []
-    full_terminal_line = "\n______________________________________________________________________________\n"
-    print(f"{full_terminal_line}summarizing transcript...")
     final_summary = ""
+    
+    full_terminal_line = "\n______________________________________________________________________________\n"
+    print(f"{full_terminal_line}summarizing transcript\n\n...")
+    
     # chunk if necessary
-    chunk_summary = invoke_summarize_chunk(transcirpt_text)
-    chunk_summaries.append(chunk_summary)
+    from hard_chunker import hard_chunk_serializable
+
+    chunk_size_limit = 28000
+    chunks = hard_chunk_serializable(transcirpt_text,chunk_size_limit)
+    for chunk in chunks:
+        chunk_summary = invoke_summarize_chunk(transcirpt_text)
+        chunk_summaries.append(chunk_summary)
+    
     if len(chunk_summaries)>1:
-        final_summary = "not written yet: def invoke_merge_chunk_summaries(chunk_summaries_list)"
+        final_summary = invoke_merge_chunk_summaries(chunk_summaries)
     
     ## TODO parsing_utilities.py def parse summary
     print(parse_video_metadata)
     print(f"{full_terminal_line}SUMMARY{full_terminal_line}")
     print(parse_video_metadata(metadata, include_transcript=False))
+
     final_summary = chunk_summary+"\n\n"+full_terminal_line ### THIS SHOULD BE SET TO RESULT OF MERGE 
 
     return final_summary
@@ -140,7 +155,18 @@ def summarize_transcript(metadata):
     print("TODO: summarize9youtube_metadata")
 
 
+def invoke_merge_chunk_summaries(list_of_summaries):
+    full_prompt = merge_chunk_summaries_PROMPT.format(
+        summarizer_identity_prompt_component = summarizer_identity_prompt_component,
+        summaries_list = list_of_summaries,
+        summarizer_style_prompt_component = summarizer_style_prompt_component,
+        summary_response_guidelines_prompt_component=summary_response_guidelines_prompt_component
+    )
+    return new_gpt().invoke(full_prompt).content
+
 if __name__ == "__main__":
+    
+
     pass
 
 

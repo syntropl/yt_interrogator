@@ -30,6 +30,7 @@ def interrogate_transcript(yt_url):
             raise ValueError("ERROR: user input is not a valid youtube url")
         print("youtube")
     try:
+
         metadata = fetch_metadata_by_url(yt_url, get_transcript=True)
         print(parse_video_metadata(metadata))
         summary = summarize_transcript(metadata)
@@ -49,15 +50,18 @@ def interrogate_transcript(yt_url):
                 case _:
                     response = one_shot_interrogate(request)
                     ## LEARN TO USE CHAT MODEL INSTEAD?
-                    interrogation_memory.append(request, response)
+                    interrogation_memory.extend([request, response])
 
     
 
     except Exception as e:
-        print(f"ERROR: fetching youtbe metadata failed. \n MESSAGE: {e}")
+        print(f"ERROR: interrogate_transcript failed.  \n MESSAGE: {e}\n.")
         
     
 
 if __name__ == "__main__":
     url = "https://www.youtube.com/watch?v=fdiTaI4gdmA&t=291s" # supersalience
+    url = "https://www.youtube.com/watch?v=5sDzvJn04Dc&list=PLnNSjVGWqTO6WqTCsGBqZDwvL1Beo7VHN" # jim rutt + ryan patrick
+    url = "https://www.youtube.com/watch?v=td6fozpEb1U" # citizen s2
+    
     interrogate_transcript(url)
