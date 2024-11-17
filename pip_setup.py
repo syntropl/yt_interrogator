@@ -14,11 +14,12 @@ def find_python_files(directory='.'):
 
 def extract_imports(file_path):
     """Extracts imported libraries from a Python file."""
-    with open(file_path, 'r') as file:
+    with open(file_path, 'r', encoding='utf-8') as file:
         content = file.read()
     # Regex to find imports
     imports = re.findall(r'^\s*(?:import|from)\s+(\w+)', content, re.MULTILINE)
     return set(imports)
+
 
 def filter_non_native_libraries(libraries):
     """Filters out native libraries, returns only non-native ones."""
