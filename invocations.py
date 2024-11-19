@@ -8,9 +8,7 @@ from langchain_community.chat_models import ChatOpenAI
 
 
 
-def new_gpt():
-    return ChatOpenAI(openai_api_key=oai_key, model=model_name)
-print("\n\n")
+
 
 
 
@@ -89,8 +87,11 @@ Your rensponse for this chunk wil be merged with simillarily structured response
 
 load_dotenv()
 oai_key = os.getenv("OPENAI_API_KEY_for_yt_interrogator")
-model_name="gpt-4o"
+model_name="gpt-4o-mini"
 
+def new_gpt():
+    return ChatOpenAI(openai_api_key=oai_key, model=model_name)
+print("\n\n")
 
 
 def invoke_summarize_chunk(source_chunk):
@@ -152,14 +153,28 @@ def invoke_merge_chunk_summaries(list_of_summaries):
     return new_gpt().invoke(full_prompt).content
 
 one_shot_chunked_PROMPT = ''''
+
+
+
+
+
 #SITUATION
 You are Transcript Interrogator
 you process provided transcripts or transcript chunks to best answer user's request.
 user wants to know things about the transcript and you find out the answers.
 
-Do not answer questions not asked by user
+
 Answer to user's request precisely, to the point, and include specific information from the transcript if relevant.
+It's possible that user's previous requests or your responses (provided below) contain relevant context. 
+Have them in mind but do not answer questions other than current REQUEST
 Do not add comments beyond answering the request directly.
+
+
+
+#PREVIOUS REQUESTS AND YOUR RESPONSES
+format: [[q, a][q,a]]etc:
+{previous_exchanges_cast_to_string}
+
 #REQUEST
 {request}
 
@@ -181,35 +196,73 @@ merge provided responses into one coherent answer, include all raised points on 
 '''
 
 
+def invoke_interrogate_chunk(chunk_text, request, previous_exchanges_list_of_lists=None):
 
 
-def one_shot_interrogate(video_metadata, request):
-    print("initiating one shot interrogation with chunking capability")
-    max_chunk_size = 28000
-    try:
-        transcript_text = parse_transcript(video_metadata['transcript_entries'])
-        from hard_chunker import hard_chunk_to_strings
-        chunks = hard_chunk_to_strings(transcript_text,max_chunk_size)
-        chunk_responses = []
-        for chunk in chunks:
-            print(f"\n\nprocessing chunk {len(chunk_responses)+1} of {len(chunks)}:")
-            full_prompt = one_shot_chunked_PROMPT.format(
-            request=request,
-            transcript_chunk = chunk)
-            response = new_gpt().invoke(full_prompt).content
-            chunk_responses.append(response)
+    print("invoke using previous exchanges")
+    full_prompt = one_shot_chunked_PROMPT.format(
+    request=request,
+    transcript_chunk = chunk_text,
+    previous_exchanges_cast_to_string= str(previous_exchanges_list_of_lists))
+    response = new_gpt().invoke(full_prompt).content
+    return response
+
+def invoke_merge_chunk_interrogation_responses(request, chunk_responses):
+    merge_full_prompt = merge_chunk_responses_PROMPT.format(
+        request = request,
+        chunk_responses = chunk_responses
+    )
+    final_response = new_gpt().invoke(merge_full_prompt).content
+    return final_response 
+
+
+def calculate_chunk_size_for_interrogation(request, previous_conversation_tuples=None):
+    default_chunk_size = 20000
+
+    """calculates number of chars taken up in prompt by elements other than chunked transcript text"""
+
+    template_length = len(one_shot_chunked_PROMPT)
+    request_length = len(request)
+
+    previous_conversation_tuples_length = 0
+    if previous_conversation_tuples:
+        previous_conversation_tuples_length = len(previous_conversation_tuples)
 
 
 
-        merge_full_prompt = merge_chunk_responses_PROMPT.format(
-            request = request,
-            chunk_responses = chunk_responses
+    total_prompt_length = template_length + request_length + previous_conversation_tuples_length
+    return default_chunk_size - total_prompt_length
+    # return 20000
 
-        )
-        final_response = new_gpt().invoke(merge_full_prompt).content
-        return final_response
-    except Exception as message:
-        print(f"ERROR: one shot interrogation with chunking failed \nMESSAGE: {message} ")
+
+
+
+
+# def on1e_shot_interrogate(video_metadata, request, previous_conversation_tuples):
+#     print("initiating one shot interrogation with chunking capability")
+#     max_chunk_size = 28000
+#     try:
+#         transcript_text = parse_transcript(video_metadata['transcript_entries'])
+#         from hard_chunker import hard_chunk_to_strings
+#         chunks = hard_chunk_to_strings(transcript_text,max_chunk_size)
+#         chunk_responses = []
+#         for chunk in chunks:
+#             print(f"processing chunk {len(chunk_responses)+1} of {len(chunks)}:")
+#             full_prompt = one_shot_chunked_PROMPT.format(
+#             request=request,
+#             transcript_chunk = chunk)
+#             response = new_gpt().invoke(full_prompt).content
+#             chunk_responses.append(response)
+
+#         merge_full_prompt = merge_chunk_responses_PROMPT.format(
+#             request = request,
+#             chunk_responses = chunk_responses
+
+#         )
+#         final_response = new_gpt().invoke(merge_full_prompt).content
+#         return final_response
+#     except Exception as message:
+#         print(f"ERROR: one shot interrogation with chunking failed \nMESSAGE: {message} ")
 
 if __name__ == "__main__":
     

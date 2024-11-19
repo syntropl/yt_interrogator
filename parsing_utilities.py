@@ -10,6 +10,11 @@ def section_print(text, title=None):
     print("\n\n______________________________________________________________________________\n")
     
 
+
+
+
+
+
 def format_duration(seconds):
     hours, remainder = divmod(seconds, 3600)
     minutes, seconds = divmod(remainder, 60)
@@ -57,3 +62,42 @@ def parse_video_metadata(metadata, include_transcript=True):
     if include_transcript:
         metadata_printable_string+=parse_transcript(transcript_entries,include_times=True)
     return metadata_printable_string
+
+
+def serialize_session(interrogation_list_of_lists):
+    complete_metadata = interrogation_list_of_lists[0][0]
+    parsed_basic_metadata = parse_video_metadata(complete_metadata, include_transcript=False)  # This is a dict parsed into string
+    parsed_transcript = parse_transcript(complete_metadata['transcript_entries'], include_times=True)
+    
+    summary = interrogation_list_of_lists[0][1]  # This is a string
+    exchanges = interrogation_list_of_lists[1:]  # This is a list of lists of strings
+
+    line_separator = "\n_____________________________________\n"
+
+    output = "(full transcript is at the bottom of this file)\n"
+    output += f"{parsed_basic_metadata}\n"
+
+    output += f"{summary}\n"
+    for exchange in exchanges:
+        output += line_separator
+        if len(exchange) >= 2:
+            output += f"{exchange[0]}\n"
+            output += line_separator
+            output += f"{exchange[1]}\n"
+            if len(exchange) > 2:
+                # Join any additional exchange parts with newlines
+                additional_parts = "\n".join(exchange[2:])
+                output += line_separator
+                output += f"{additional_parts}\n"
+        else:
+            # Handle cases where exchange has fewer than 2 elements
+            output += "\n".join(exchange) + "\n"
+    
+    output += line_separator
+    output += f"{parsed_basic_metadata}\n"
+    output += line_separator
+    output += "\nFULL TRANSCRIPT\n"
+    output += line_separator    
+    output += f"{parsed_transcript}"
+    
+    return output
