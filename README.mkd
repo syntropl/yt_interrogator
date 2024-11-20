@@ -52,25 +52,25 @@ run app from terminal or using python launcher
 navigate to program folder 
 ```cd yt_interrogator```
 
-run python with main.py as argument:
-```python main.py```
+run python with YT_INTERROGATOR.py as argument:
+```python YT_INTERROGATOR.py```
 
 
 ## option 2: run using mouse / touchpad 
 find yt_interrogator folder in your system's file explorer
-in the folder find main.py
-drag main.py on your terminal
+in the folder find YT_INTERROGATOR.py
+drag YT_INTERROGATOR.py on your terminal
 press enter
 
 ## option 3: run using python_launcher (osx)
 find yt_interrogator folder in your system's file explorer
-in the folder find main.py
+in the folder find YT_INTERROGATOR.py
 mouse2 click on the file (using trackpad :two finger click /  using mouse: right button) -> context menu will appear
 in the context menu, hover over "Open With" and then click "Other..."
 in the lower center of the window (below apps list) ensure the checkbox "Always Open With" is checked
 locate Python Launcher, select it and click "open" in window's right bottom corner.
 
-from now on you can run main.py by finding it in spotlight and pressing enter
+from now on you can run YT_INTERROGATOR.py by finding it in spotlight and pressing enter
 
 
 
