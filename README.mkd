@@ -1,35 +1,25 @@
 # INSTALLATION INSTRUCTIONS
 
 ## prerequisites for app to work
+- desktop os (i still havent found a way to make it work on android)
 - OPENAI api key (it's available to logged in users at the api key page https://platform.openai.com/api-keys ) 
 - access to the internet from your device
 
 # 1. OPEN TERMINAL
-This is a Comamand Line Interface application and has no GUI. IT requires a terminal app both to install, and to run it. For android you may need to perform additional steps
-
-# TERMINAL IN OSX / LINUX / WINDOWS
-
-For desktop systems you can use your system's native terminal.
+This is a Comamand Line Interface application and has no GUI. IT requires a terminal app both to install, and to run it. For desktop systems you can use your system's native terminal.
 
 - mac OSX and Linux: run "Terminal" app
 - windows: run "Windows Terminal" app
 
-## TERMINAL ON ANDROID
 
-1.  Download and install a terminal app on your android device
-
-I suggest using termux. You can use one of two ways to install it use google play or direct download:
-- google play: https://play.google.com/store/apps/details?id=com.termux
-- direct download + run the downloaded apk file: https://f-droid.org/en/packages/com.termux/
-
-2. input this command in the terminal:
-
-```pkg update && pkg upgrade```
-
-
-### 3 INSTALL GIT AND PYTHON (unless you already have them)
+### 2 INSTALL GIT AND PYTHON (unless you already have them)
 in the terminal app input and run the following sequence of commands
 
+
+#### FASTER WAY
+```pkg install git && pkg install python3```
+
+#### STEP BY STEP WAY (for troubleshooting)
 
 ```pkg install git``` will nstall git
 
@@ -53,26 +43,34 @@ in the terminal app input and run the following sequence of commands
 if you have an old version of the repo input ```git pull`` to update your repo
 
 
-# 4 INSTALL DEPENDENCIES
-
-```pip install pipreqs``` will 
-install required python libraries listed in requirements.txt
-
-
-```pipreqs . --force --savepath update_requirements.txt```
-
-```python update_requirements.py```will download missing libraries
-
-
-
-(optionally, if there are problems with dependencies, make sure the txt is up to date)
-
-```update_requirements.py```
 
 # 5 RUN THE APP
-run app from terminal while at yt_interrogator
+run app from terminal or using python launcher 
 
-```main.py```
+
+## option 1: run from within terminal
+navigate to program folder 
+```cd yt_interrogator```
+
+run python with main.py as argument:
+```python main.py```
+
+
+## option 2: run using mouse / touchpad 
+find yt_interrogator folder in your system's file explorer
+in the folder find main.py
+drag main.py on your terminal
+press enter
+
+## option 3: run using python_launcher (osx)
+find yt_interrogator folder in your system's file explorer
+in the folder find main.py
+mouse2 click on the file (using trackpad :two finger click /  using mouse: right button) -> context menu will appear
+in the context menu, hover over "Open With" and then click "Other..."
+in the lower center of the window (below apps list) ensure the checkbox "Always Open With" is checked
+locate Python Launcher, select it and click "open" in window's right bottom corner.
+
+from now on you can run main.py by finding it in spotlight and pressing enter
 
 
 

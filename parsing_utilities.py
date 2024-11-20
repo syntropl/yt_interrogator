@@ -1,4 +1,24 @@
 from datetime import datetime, timedelta
+import re
+
+def is_url(string_input: str) -> bool:
+    url_pattern = re.compile(
+        r'^(https?://)?'  # Optional scheme
+        r'(([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,})'  # Domain
+        r'(/.*)?$'  # Optional path
+    )
+    return bool(url_pattern.match(string_input))
+
+def is_youtube_url(string_input: str) -> bool:
+    youtube_pattern = re.compile(
+        r'^(https?://)?(www\.)?(youtube\.com|youtu\.be)(/.*)?$'
+    )
+    return bool(youtube_pattern.match(string_input))
+
+
+
+
+
 
 def section_print(text, title=None):
     print("\n\n")
@@ -62,7 +82,6 @@ def parse_video_metadata(metadata, include_transcript=True):
     if include_transcript:
         metadata_printable_string+=parse_transcript(transcript_entries,include_times=True)
     return metadata_printable_string
-
 
 def serialize_session(interrogation_list_of_lists):
     complete_metadata = interrogation_list_of_lists[0][0]

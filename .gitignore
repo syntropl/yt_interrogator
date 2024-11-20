@@ -38,3 +38,6 @@ build/
 dist/
 *.egg-info/
 .eggs/
+
+# Ignore saved sessions folder
+SAVED_SESSIONS/

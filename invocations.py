@@ -199,7 +199,6 @@ merge provided responses into one coherent answer, include all raised points on 
 def invoke_interrogate_chunk(chunk_text, request, previous_exchanges_list_of_lists=None):
 
 
-    print("invoke using previous exchanges")
     full_prompt = one_shot_chunked_PROMPT.format(
     request=request,
     transcript_chunk = chunk_text,
@@ -216,7 +215,7 @@ def invoke_merge_chunk_interrogation_responses(request, chunk_responses):
     return final_response 
 
 
-def calculate_chunk_size_for_interrogation(request, previous_conversation_tuples=None):
+def calculate_chunk_size_for_interrogation(request, interrogation_list_of_lists=None):
     default_chunk_size = 20000
 
     """calculates number of chars taken up in prompt by elements other than chunked transcript text"""
@@ -224,13 +223,13 @@ def calculate_chunk_size_for_interrogation(request, previous_conversation_tuples
     template_length = len(one_shot_chunked_PROMPT)
     request_length = len(request)
 
-    previous_conversation_tuples_length = 0
-    if previous_conversation_tuples:
-        previous_conversation_tuples_length = len(previous_conversation_tuples)
+    interrogation_list_of_lists_length = 0
+    if interrogation_list_of_lists:
+        interrogation_list_of_lists_length = len(interrogation_list_of_lists)
 
 
 
-    total_prompt_length = template_length + request_length + previous_conversation_tuples_length
+    total_prompt_length = template_length + request_length + interrogation_list_of_lists_length
     return default_chunk_size - total_prompt_length
     # return 20000
 
