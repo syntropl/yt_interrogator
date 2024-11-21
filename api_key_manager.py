@@ -11,7 +11,7 @@ from parsing_utilities import section_print
 ENV_FILE = Path('.') / '.env'
 
 # Load environment variables from the .env file
-load_dotenv(dotenv_path=ENV_FILE)
+load_dotenv(dotenv_path=ENV_FILE, override=True)
 
 
         
@@ -30,6 +30,7 @@ def verify_openai_api_key(key: str) -> bool:
     """
 
     try:
+        load_dotenv(dotenv_path=ENV_FILE, override=True)
         
         llm = OpenAI(openai_api_key=key)
         test_prompt = '''"Respond only with a word exactly 11 characters long. interlinked."'''
@@ -62,7 +63,10 @@ def set_api_key(key: str):
         print('''\nsetting api key as environment variable''')
         set_key(str(ENV_FILE), "OPENAI_API_KEY_for_yt_interrogator", key)
         print('''reading api key from env''')
+        load_dotenv(dotenv_path=ENV_FILE, override=True)
+
         if (os.getenv("OPENAI_API_KEY_for_yt_interrogator")==key):
+            
             print("\nAPI KEY IS SET")
         else:
             print('\n\nERROR: key NOT SAVED to env')
@@ -71,15 +75,16 @@ def set_api_key(key: str):
         print(f"\n\nERROR: Failed to set API key. {str(e)}")
 
 def print_api_key(masked=False):
+    load_dotenv(dotenv_path=ENV_FILE, override=True)
     key = os.getenv("OPENAI_API_KEY_for_yt_interrogator")
     if key is None:
-        return "API key not found in environment variables."
+        print("API key not found in environment variables.")
     
     if masked:
         masked_key = f"{key[:10]}{'*' * (len(key) - 20)}{key[-10:]}"
-        return masked_key
-    return key
-
+        print(masked_key)
+    else:
+        print(key)
 
 def ensure_api_key_is_verified() -> bool:
     """
@@ -89,6 +94,7 @@ def ensure_api_key_is_verified() -> bool:
     Returns:
         bool: True if the API key from .env is valid, False otherwise.
     """
+    load_dotenv(dotenv_path=ENV_FILE, override=True)
     try:
         api_key = os.getenv("OPENAI_API_KEY_for_yt_interrogator")
         if not api_key:
@@ -122,6 +128,7 @@ def mask_api_key(api_key: str) -> str:
 
 
 if __name__ == "__main__":
-        user_key = input("input a valid openai api key")
+        print_api_key()
+        user_key = input("input your openai api key")
         set_api_key(user_key)
 
