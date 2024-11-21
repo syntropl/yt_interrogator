@@ -17,10 +17,17 @@ Prerequisites for app to work:
 - access to the internet from your device
 
 ## 1 INSTALL GIT AND PYTHON (unless you already have them)
+
+### osx 
 in terminal, run:
 
 ```pkg install git && pkg install python3```
+### windows
+in terminal, run:
 
+```winget install --id Git.Git -e```
+
+```winget install --id Python.Python.3 -e```
 ## 2 CLONE THIS REPO 
 navigate to the folder where you want the repo using bash commands:  ```ls```,  ```cd {folder name}```, ```cd ..```
 
@@ -29,6 +36,8 @@ navigate to the folder where you want the repo using bash commands:  ```ls```,  
 - ```git clone https://github.com/syntropl/yt_interrogator``` will clone repo to current folder
 
 - ```cd yt_interrogator``` will enter repo folder
+
+on osx, sicnce you're here, run this:
 
 - ```chmod +x YT_INTERROGATOR.py``` will make the file executable 
 
@@ -43,11 +52,14 @@ You can run it directly from terminal or using python launcher (osx):
 
 
 ### option 1: run from within terminal
-- navigate to program folder 
-```cd yt_interrogator```
+- navigate to yt_interrogator folder
+
 
 - run python with YT_INTERROGATOR.py as argument:
+#### osx
 ```python3 YT_INTERROGATOR.py```
+#### windows
+```python YT_INTERROGATOR.py```
 
 
 ### option 2: run using mouse / touchpad 
@@ -58,7 +70,7 @@ You can run it directly from terminal or using python launcher (osx):
 
 
 ### option 3: make file executable to run it directly from os
-- navigate to the repo folder using bash commands:  ```ls```,  ```cd {folder name}```, ```cd ..```
+
 - while in /yt_interrogator/ 
 ```chmod +x YT_INTERROGATOR.py``` will make the file executable 
 
