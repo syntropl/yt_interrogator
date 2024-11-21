@@ -51,7 +51,8 @@ quit              to exit program
 def start_sequence():
     
     from api_key_manager import ensure_api_key_is_verified
-    ensure_api_key_is_verified()
+    if not ensure_api_key_is_verified():
+        initiate_set_api_key()
     print(ascii_intro)
     
 def main_sequence():
