@@ -13,50 +13,40 @@ It came to existence because i wanted a practical langchain excercise with some 
 
 Prerequisites for app to work:
 - desktop os (i still havent found a way to make it work on android)
-- OPENAI api key (it's available to logged in users at the api key page https://platform.openai.com/api-keys ) 
+- openai api key (it's available to logged in users at the api key page https://platform.openai.com/api-keys ) 
 - access to the internet from your device
 
-## 1. OPEN TERMINAL
-This is a Comamand Line Interface application and has no GUI. IT requires a terminal app both to install, and to run it. For desktop systems you can use your system's native terminal.
-
-- mac OSX and Linux: run "Terminal" app
-- windows: run "Windows Terminal" app
-
-
-## 2 INSTALL GIT AND PYTHON (unless you already have them)
-in the terminal app input and run the following command
+## 1 INSTALL GIT AND PYTHON (unless you already have them)
+in terminal, run:
 
 ```pkg install git && pkg install python3```
 
-## 3 CLONE THIS REPO 
+## 2 CLONE THIS REPO 
 navigate to the folder where you want the repo using bash commands:  ```ls```,  ```cd {folder name}```, ```cd ..```
 
 ### git clone
 
-```git clone https://github.com/syntropl/yt_interrogator``` will clone repo to current folder
+- ```git clone https://github.com/syntropl/yt_interrogator``` will clone repo to current folder
 
-## (optional steps)
+- ```cd yt_interrogator``` will enter repo folder
 
-
-```cd yt_interrogator``` will enter repo folder
-
-```chmod +x YT_INTERROGATOR.py``` will make the file executable 
-
-___ 
-
-if you have an old version of the repo input ```git pull``` to update your repo
+- ```chmod +x YT_INTERROGATOR.py``` will make the file executable 
 
 
 
-## 4 RUN THE APP
-run app directly from terminal or using python launcher 
+if you have an old version of the repo, input ```git pull``` to update your repo
+
+
+
+## 3 RUN THE APP
+You can run it directly from terminal or using python launcher (osx):
 
 
 ### option 1: run from within terminal
-navigate to program folder 
+- navigate to program folder 
 ```cd yt_interrogator```
 
-run python with YT_INTERROGATOR.py as argument:
+- run python with YT_INTERROGATOR.py as argument:
 ```python3 YT_INTERROGATOR.py```
 
 
@@ -68,13 +58,14 @@ run python with YT_INTERROGATOR.py as argument:
 
 
 ### option 3: make file executable to run it directly from os
-navigate to the repo folder using bash commands:  ```ls```,  ```cd {folder name}```, ```cd ..```
-
-while in /yt_interrogator/ 
+- navigate to the repo folder using bash commands:  ```ls```,  ```cd {folder name}```, ```cd ..```
+- while in /yt_interrogator/ 
 ```chmod +x YT_INTERROGATOR.py``` will make the file executable 
 
 
 ### option 4: run using python_launcher (osx)
+You go through the below procedure once, and then you can easily run it from spotlight or finder
+
 - find yt_interrogator folder in your system's file explorer
 - in the folder find YT_INTERROGATOR.py
 - mouse2 click on the file (using trackpad :two finger click /  using mouse: right button) -> context menu will appear
