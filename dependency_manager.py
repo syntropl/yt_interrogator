@@ -58,8 +58,8 @@ def ensure_dependencies():
         if not is_installed(pkg_name):
             missing.append(pkg)
     
-    if missing:
+    if len(missing)>0:
         print("Installing missing dependencies...")
         download_dependencies()
     else:
-        print("All dependencies are already installed.")
+        print("All requirements satisfied.")
