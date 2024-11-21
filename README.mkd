@@ -62,20 +62,13 @@ You can run it directly from terminal or using python launcher (osx):
 ```python YT_INTERROGATOR.py```
 
 
-### option 2: run using mouse / touchpad 
-- find yt_interrogator folder in your system's file explorer
-- in the folder find YT_INTERROGATOR.py
-- drag YT_INTERROGATOR.py on your terminal
-- press enter
-
-
-### option 3: make file executable to run it directly from os
+### option 2: make file executable to run it directly from os
 
 - while in /yt_interrogator/ 
 ```chmod +x YT_INTERROGATOR.py``` will make the file executable 
 
 
-### option 4: run using python_launcher (osx)
+### option 3: run using python_launcher (osx)
 You go through the below procedure once, and then you can easily run it from spotlight or finder
 
 - find yt_interrogator folder in your system's file explorer
