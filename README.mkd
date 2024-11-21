@@ -11,7 +11,7 @@ It came to existence because i wanted a practical langchain excercise with some 
 
 # INSTALLATION INSTRUCTIONS
 
-## prerequisites for app to work
+Prerequisites for app to work:
 - desktop os (i still havent found a way to make it work on android)
 - OPENAI api key (it's available to logged in users at the api key page https://platform.openai.com/api-keys ) 
 - access to the internet from your device
@@ -24,42 +24,27 @@ This is a Comamand Line Interface application and has no GUI. IT requires a term
 
 
 ## 2 INSTALL GIT AND PYTHON (unless you already have them)
-in the terminal app input and run the following sequence of commands
+in the terminal app input and run the following command
 
-
-#### FASTER WAY
 ```pkg install git && pkg install python3```
-
-#### STEP BY STEP WAY (for troubleshooting)
-
-```pkg install git``` will nstall git
-
-```git --version``` will check if git is installed
-
-
-```pkg install python3``` will install python
-
-```python --version``` will check if Python is installed
-
-
-
 
 ## 3 CLONE THIS REPO 
 navigate to the folder where you want the repo using bash commands:  ```ls```,  ```cd {folder name}```, ```cd ..```
 
-# git clone
+### git clone
 
-```git clone https://github.com/syntropl/yt_interrogator``` will clone repo to your device
+```git clone https://github.com/syntropl/yt_interrogator``` will clone repo to current folder
 
-## additional steps
+## (optional steps)
 
 
 ```cd yt_interrogator``` will enter repo folder
 
 ```chmod +x YT_INTERROGATOR.py``` will make the file executable 
 
+___ 
 
-if you have an old version of the repo input ```git pull`` to update your repo
+if you have an old version of the repo input ```git pull``` to update your repo
 
 
 
@@ -76,10 +61,10 @@ run python with YT_INTERROGATOR.py as argument:
 
 
 ### option 2: run using mouse / touchpad 
-find yt_interrogator folder in your system's file explorer
-in the folder find YT_INTERROGATOR.py
-drag YT_INTERROGATOR.py on your terminal
-press enter
+- find yt_interrogator folder in your system's file explorer
+- in the folder find YT_INTERROGATOR.py
+- drag YT_INTERROGATOR.py on your terminal
+- press enter
 
 
 ### option 3: make file executable to run it directly from os
