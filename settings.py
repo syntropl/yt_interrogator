@@ -2,6 +2,7 @@ from api_key_manager import set_api_key, verify_openai_api_key
 import os
 from dotenv import load_dotenv
 from pathlib import Path
+import shelve
 
 
 
@@ -27,11 +28,6 @@ get your key on openai api key page: https://platform.openai.com/api-keys
             should_continue=False
 
 
-import shelve
-
-with shelve.open("settings") as settings:
-    print(f"Current language: {settings.get('language', 'en')}")
-    settings["language"] = "fr"        
 
 def set_user_language(new_language):
     with shelve.open("settings") as settings:  
@@ -44,7 +40,7 @@ def get_user_language():
 
 def initiate_set_output_lanugage():
     print(f"current output language is {get_user_language()}")
-    user_input = input("input your preffered output language. to cancel input 'cancel\n>")
+    user_input = input("input your preffered output language. to cancel input 'cancel'\n>")
     match user_input:
         case "cancel":
             pass
