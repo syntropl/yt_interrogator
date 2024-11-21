@@ -1,9 +1,10 @@
-# main.py
+#!/usr/bin/env python3
+
 import sys
 import os
 from dependency_manager import ensure_dependencies
 
-def main():
+def install_and_run():
     """
     Entry point of the application. Ensures dependencies are installed and runs the main program.
     """
@@ -19,4 +20,4 @@ def main():
         sys.exit(1)
 
 if __name__ == "__main__":
-    main()
+    install_and_run()

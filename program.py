@@ -1,4 +1,4 @@
-from settings import initiate_set_api_key, iniate_set_output_lanugage, initiate_set_output_folder_path
+from settings import initiate_set_api_key, initiate_set_output_lanugage, initiate_set_output_folder_path
 from api_key_manager import ensure_api_key_is_verified, print_api_key
 from interrogate_transcript import interrogate_loop, save_interrogation
 from parsing_utilities import is_url, is_youtube_url
@@ -44,7 +44,7 @@ COMMAND           DESCRIPTION
 -------------------------------------------------
 set_api_key       to set new api key
 print_api_key     to print api key
-language          to set llm output language (TODO)
+language          to set llm output language
 quit              to exit program
 
 """
@@ -72,8 +72,8 @@ def main_sequence():
                     initiate_set_api_key()
                 case "print_api_key":
                     print_api_key()
-                case "lanugage":
-                    iniate_set_output_lanugage()
+                case "language":
+                    initiate_set_output_lanugage()
                 case "folder":
                     initiate_set_output_folder_path()
                 case "quit":
@@ -84,7 +84,7 @@ def main_sequence():
                         for interrogation in interrogations:
                             print(interrogation[0][0]['title'])
                         print("\n")
-                    print(f"TOTAL COST (USD): {token_counts.total_cost}")
+                    print(f"{token_counts}")
                               
                     
 
@@ -95,15 +95,20 @@ def main_sequence():
                         save_interrogation(interrogation)
                 case _:
                     try:
-                        interrogation = interrogate_loop(user_input)                    
+                        interrogation = interrogate_loop(user_input)
+
+
                     except Exception as e:
                         pass
+
+
 
 def run():
     start_sequence()
     main_sequence()
     print("\n\n\n END OF PROGRAM\n\n\n")
     
+
 
 if __name__ == "__main__":
     run()

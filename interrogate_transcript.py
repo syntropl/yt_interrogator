@@ -38,23 +38,26 @@ def interrogate_loop(yt_url):
             raise ValueError("ERROR: user input is not a valid youtube url")
         print("youtube")
     try:
+
+
         with get_openai_callback() as token_counts:     
             metadata = fetch_metadata_by_url(yt_url, get_transcript=True)
             basic_metadata = parse_video_metadata(metadata)
             summary = summarize_transcript(metadata)
-            section_print(token_counts, "TOKENS USED FOR THIS QUESTION AND ANSWER")
-            print("\n\n")
+            # section_print(token_counts, "TOKENS USED FOR THIS QUESTION AND ANSWER")
+ 
+            print(basic_metadata)  
+            print(summary)           
+            print(f"({token_counts.total_cost} USD burned for {token_counts.prompt_tokens} prompt tokens  +   {token_counts.completion_tokens} completion  tokens)")
 
-        print(basic_metadata)  
-        print(summary)
-        interrogation_log = [[metadata, summary]]
-        exchanges = []
+            interrogation_log = [[metadata, summary]]
+            exchanges = []
 
         should_keep_interrogating = True
 
         while should_keep_interrogating:
-            print("\nfor commands type 'help'\n\n")
-            request = input('ask me something about the transcript:\n\n>')
+            print("for commands type 'help'")
+            request = input('\n\nask me something about the transcript:\n\n>')
             if is_url(request):
                 if is_youtube_url(request):
                         print(f""" you are currently working on the video:\n "{metadata['title']}"
@@ -71,7 +74,12 @@ def interrogate_loop(yt_url):
                     should_keep_interrogating = False 
                 
                 case "end":
+                    interrogation_log.extend(exchanges)
+                    return interrogation_log
                     should_keep_interrogating = False
+                case "quit":
+                    print("to quit program, first exit this interrogation by typing 'end'")
+
                     
                 case _:
                     with get_openai_callback() as token_counts: 
@@ -79,8 +87,8 @@ def interrogate_loop(yt_url):
                         exchanges.append([request, response])
                         print("\n\n")
                         section_print(response, request)
-                        section_print(token_counts, "\TOKENS USED FOR THIS QUESTION AND ANSWER")
-                        print("\n\n")
+                        print(f"({token_counts.total_cost} USD burned for {token_counts.prompt_tokens} prompt tokens  +   {token_counts.completion_tokens} completion  tokens)")
+                        print("\n")
 
 
     

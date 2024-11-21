@@ -3,7 +3,8 @@
 This is a command line interface tool that utilizes gpt-4o-mini via openai api, mediated by langchain.
 It requires openai api key.
 
-Paste youtube video url. If it has a transcript, it will be summarized (in english, other lanugages coming soon)
+Paste youtube video url. If it has a transcript, it will be summarized. then you can continue to ask questions about the transcript.
+
 For now text is hard-chunked with no regard to the contents semantic structure. 
 
 It came to existence because i wanted a practical langchain excercise with some utility to myself. 
@@ -41,21 +42,29 @@ in the terminal app input and run the following sequence of commands
 ```python --version``` will check if Python is installed
 
 
-## 3 CLONE THIS REPO 
 
+
+## 3 CLONE THIS REPO 
+navigate to the folder where you want the repo using bash commands:  ```ls```,  ```cd {folder name}```, ```cd ..```
+
+# git clone
 
 ```git clone https://github.com/syntropl/yt_interrogator``` will clone repo to your device
 
+## additional steps
 
 
 ```cd yt_interrogator``` will enter repo folder
+
+```chmod +x YT_INTERROGATOR.py``` will make the file executable 
+
 
 if you have an old version of the repo input ```git pull`` to update your repo
 
 
 
 ## 4 RUN THE APP
-run app from terminal or using python launcher 
+run app directly from terminal or using python launcher 
 
 
 ### option 1: run from within terminal
@@ -63,7 +72,7 @@ navigate to program folder
 ```cd yt_interrogator```
 
 run python with YT_INTERROGATOR.py as argument:
-```python YT_INTERROGATOR.py```
+```python3 YT_INTERROGATOR.py```
 
 
 ### option 2: run using mouse / touchpad 
@@ -72,15 +81,22 @@ in the folder find YT_INTERROGATOR.py
 drag YT_INTERROGATOR.py on your terminal
 press enter
 
-### option 3: run using python_launcher (osx)
-find yt_interrogator folder in your system's file explorer
-in the folder find YT_INTERROGATOR.py
-mouse2 click on the file (using trackpad :two finger click /  using mouse: right button) -> context menu will appear
-in the context menu, hover over "Open With" and then click "Other..."
-in the lower center of the window (below apps list) ensure the checkbox "Always Open With" is checked
-locate Python Launcher, select it and click "open" in window's right bottom corner.
 
-from now on you can run YT_INTERROGATOR.py by finding it in spotlight and pressing enter
+### option 3: make file executable to run it directly from os
+navigate to the repo folder using bash commands:  ```ls```,  ```cd {folder name}```, ```cd ..```
+
+while in /yt_interrogator/ 
+```chmod +x YT_INTERROGATOR.py``` will make the file executable 
+
+
+### option 4: run using python_launcher (osx)
+- find yt_interrogator folder in your system's file explorer
+- in the folder find YT_INTERROGATOR.py
+- mouse2 click on the file (using trackpad :two finger click /  using mouse: right button) -> context menu will appear
+- in the context menu, hover over "Open With" and then click "Other..."
+- in the lower center of the window (below apps list) ensure the checkbox "Always Open With" is checked
+- locate Python Launcher, select it and click "open" in window's right bottom corner.
+- from now on you can run YT_INTERROGATOR.py by finding it in spotlight and pressing enter
 
 
 
