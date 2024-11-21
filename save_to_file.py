@@ -8,19 +8,18 @@ def save_interrogation(interrogation_list_of_lists):
 
     sessions_folder = get_or_create_sessions_folder()
     string_to_save = serialize_session(interrogation_list_of_lists)
-    print(string_to_save)
-   
+       
     video_title = interrogation_list_of_lists[0][0]['title']
     file_name = generate_file_name(video_title, sessions_folder)
     file_path = os.path.join(sessions_folder, file_name)
     
-    print(f"\nSaving as {file_name} in {sessions_folder}...")
+    print(f"\nSaving in {sessions_folder}...")
     
     try:
         # Step 6: Open the file in write mode and save the serialized string
         with open(file_path, 'w', encoding='utf-8') as file:
             file.write(string_to_save)
-        print(f"file saved successfully")
+        print(f"\nfile saved successfully as {file_name}")
     except Exception as e:
         # Handle any exceptions that occur during file operations
         print(f"Failed to save interrogation: {e}")

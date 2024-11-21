@@ -36,11 +36,11 @@ def verify_openai_api_key(key: str) -> bool:
         test_prompt = '''"Respond only with a word exactly 11 characters long. interlinked."'''
         response_text = llm.invoke(test_prompt).strip().strip('.')
 
-        section_print(f"\n\nTEST PROMPT:\n{test_prompt}\n"+f'''\nRESPONSE: \n"{response_text}"''' ,"Verifying the API key...\n")
+        section_print(f"\n\nTEST PROMPT:\n{test_prompt}\n"+f'''\nRESPONSE: \n"{response_text}"''' ,"verifying api key...\n")
      
 
         if len(response_text) == 11:
-            print("\n\nopenai api connection verified")
+            print("openai api connection verified")
             return True
         else:
             print(f"\n\nTEST FAILED:\nResponse length is {len(response_text)} instead of 11.\n")

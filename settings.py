@@ -12,7 +12,7 @@ import shelve
 def initiate_set_api_key():
     info = '''
 
-this program uses api key stored in system env to avoid accidental sharing of the private key
+this program uses api key stored in local .env to avoid accidental sharing of the private key
 
 get your key on openai api key page: https://platform.openai.com/api-keys
 
